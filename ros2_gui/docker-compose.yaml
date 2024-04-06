@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  host1:
+    container_name: ros2_gui
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - UID=${UID}
+        - GID=${GID}
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=${DISPLAY}
+      - "QT_X11_NO_MITSHM=1"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority:ro
+    hostname: ros2_gui
+    networks:
+      ros2-network:
+        ipv4_address: 192.168.100.221
+    tty: true
+    user: "${UID}:${GID}"
+networks:
+  ros2-network:
+    external: true
