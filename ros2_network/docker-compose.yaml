@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  host1:
+    container_name: ros2_zenoh
+    image: n622jwith/ros2_zenoh
+    command: /bin/sh -c "tail -f /dev/null"
+    hostname: ros2_zenoh
+    networks:
+      ros2_network:
+        ipv4_address: 192.168.10.221
+networks:
+  ros2_network:
+    external: true
