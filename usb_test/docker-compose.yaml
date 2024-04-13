@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  ros2_gui:
-    container_name: ros2_gui
+  usb_test:
+    container_name: usb_test
     build:
       context: .
       args:
@@ -11,15 +11,18 @@ services:
         - PASSWORD=${PASSWORD}
         - UID=${UID}
         - GID=${GID}
+        - GIT_USER_NAME=${GIT_USER_NAME}
+        - GIT_USER_EMAIL=${GIT_USER_EMAIL}
       dockerfile: Dockerfile
-    image: n622jwith/ros2_gui:latest
+    image: n622jwith/git_test:latest
     environment:
       - DISPLAY=${DISPLAY}
       - "QT_X11_NO_MITSHM=1"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority/:/root/.Xauthority:ro
-    hostname: ros2_gui
+      - $HOME/.ssh:$HOME/.ssh:ro
+    hostname: usb_test
     tty: true
     privileged: true
     user: "${UID}:${GID}"

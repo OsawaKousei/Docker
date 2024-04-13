@@ -26,6 +26,8 @@ RUN apt-get update &&\
     apt-get install -y ros-humble-nav2-bringup &&\
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get install sudo -y
+
 # Add user and group, then allow sudo
 ARG UID
 ARG GID
