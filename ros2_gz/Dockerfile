@@ -1,8 +1,29 @@
-FROM n622jwith/ros2_zenoh:latest
+FROM nvidia/opengl:base-ubuntu22.04
 
+# Upgrade OS
+RUN apt-get update -q && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    apt-get autoclean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
+
+# Timezone, Launguage設定
+RUN apt update &&\
+    apt install -y --no-install-recommends \
+    locales \
+    software-properties-common tzdata &&\
+    locale-gen ja_JP ja_JP.UTF-8 &&\
+    update-locale LC_ALL=ja_JP.UTF-8 LANG=ja_JP.UTF-8 &&\
+    add-apt-repository universe
+
+ENV LANG=ja_JP.UTF-8
+ENV TZ=Asia/Tokyo
+
+# install gui tool
 # gui tools
 RUN apt-get update && \
-    apt-get install -y libqt5gui5 && \
+    apt-get install -y libqt5gui5\
+    mesa-utils && \
     rm -rf /var/lib/apt/lists/*
 ENV QT_DEBUG_PLUGINS=1
 
@@ -38,7 +59,6 @@ RUN useradd -u ${UID} -g ${GID} -G sudo -s /bin/bash -m ${USER_NAME}
 RUN echo "${USER_NAME}:${PASSWORD}" | chpasswd
 RUN echo "Defaults visiblepw" >> /etc/sudoers
 RUN echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
 USER ${USER_NAME}
 
 CMD ["/bin/bash"]

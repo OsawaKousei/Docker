@@ -1,8 +1,8 @@
 version: "3"
 
 services:
-  ros2_gui:
-    container_name: ros2_gui
+  sudo_test:
+    container_name: sudo_test
     build:
       context: .
       args:
@@ -12,13 +12,14 @@ services:
         - UID=${UID}
         - GID=${GID}
       dockerfile: Dockerfile
-    image: n622jwith/ros2_gui:latest
+    image: n622jwith/sudo_test:latest
     environment:
       - DISPLAY=${DISPLAY}
       - "QT_X11_NO_MITSHM=1"
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority/:/root/.Xauthority:ro
-    hostname: ros2_gui
+    hostname: sudo_test
+    network_mode: "host"
     tty: true
     user: "${UID}:${GID}"
