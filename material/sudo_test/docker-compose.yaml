@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  sudo_test:
+    container_name: sudo_test
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - PASSWORD=${PASSWORD}
+        - UID=${UID}
+        - GID=${GID}
+      dockerfile: Dockerfile
+    image: n622jwith/sudo_test:latest
+    environment:
+      - DISPLAY=${DISPLAY}
+      - "QT_X11_NO_MITSHM=1"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority:ro
+    hostname: sudo_test
+    network_mode: "host"
+    tty: true
+    user: "${UID}:${GID}"

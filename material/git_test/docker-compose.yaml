@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  ros2_gui:
+    container_name: git_test
+    build:
+      context: .
+      args:
+        - USER_NAME=${USER_NAME}
+        - GROUP_NAME=${GROUP_NAME}
+        - PASSWORD=${PASSWORD}
+        - UID=${UID}
+        - GID=${GID}
+        - GIT_USER_NAME=${GIT_USER_NAME}
+        - GIT_USER_EMAIL=${GIT_USER_EMAIL}
+      dockerfile: Dockerfile
+    image: n622jwith/git_test:latest
+    environment:
+      - DISPLAY=${DISPLAY}
+      - "QT_X11_NO_MITSHM=1"
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority/:/root/.Xauthority:ro
+      - $HOME/.ssh:$HOME/.ssh:ro
+    hostname: git_test
+    tty: true
+    user: "${UID}:${GID}"

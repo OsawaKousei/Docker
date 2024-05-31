@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ubuntu1604-desktop-test
+    image: 'ubuntu1604-desktop-test:latest'
+    ports:
+      - 5901:5901
+    stdin_open: true
